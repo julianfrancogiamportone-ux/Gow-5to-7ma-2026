@@ -12,9 +12,19 @@ public class Ataque {
     private String email;
     private int costoEnergia;
     private int daniobase;
+
    
     public Ataque() {
     }
+
+  public Ataque(Long id, String nombre, String email, int costoEnergia, int daniobase) {
+        this.id = id;
+        this.nombre = nombre;
+        this.email = email;
+        this.costoEnergia = costoEnergia;
+        this.daniobase = daniobase;
+    }
+
     public Long getId() {
         return id;
     }
@@ -46,18 +56,7 @@ public class Ataque {
         this.daniobase = daniobase;
     }
 
-    }
-    public Ataque(Long id, String nombre, String email, int costoEnergia, int daniobase) {
-        this.id = id;
-        this.nombre = nombre;
-        this.email = email;
-        this.costoEnergia = costoEnergia;
-        this.daniobase = daniobase;
-    }
-
-
-
-
     
 
+  
 }
