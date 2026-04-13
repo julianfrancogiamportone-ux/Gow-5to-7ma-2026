@@ -13,6 +13,25 @@ private float defensaBase;
 private Arma armaEquipada;
 private List inventario;
 private List habilidades;
+
+
+
+
+public Peleador() {
+}
+
+public Peleador(long id, String nombre, int puntosVida, int energia, float defensaBase, Arma armaEquipada,
+        List inventario, List habilidades) {
+    Id = id;
+    this.nombre = nombre;
+    PuntosVida = puntosVida;
+    this.energia = energia;
+    this.defensaBase = defensaBase;
+    this.armaEquipada = armaEquipada;
+    this.inventario = inventario;
+    this.habilidades = habilidades;
+}
+
 public long getId() {
     return Id;
 }
