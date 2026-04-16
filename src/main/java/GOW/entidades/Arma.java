@@ -1,15 +1,18 @@
 package GOW.entidades;
 import jakarta.persistence.*;
 import java.util.List;
+
 @Entity
 public class Arma{
 private int id;
 private String nombre;
 private int BonificadorDanio;
 private float peso;
-public Arma()
-@ManyToMany(mappedBy = "inventario") 
-private List<Peleador> peleadores; 
+@ManyToMany(mappedBy = "Armaspeleador") 
+private List<Peleador> peleadores;
+
+public Arma(){
+ 
 }
 public Arma(int id, String nombre, int bonificadorDanio, float peso) {
     this.id = id;
