@@ -11,26 +11,44 @@ private int PuntosVida;
 private int energia;
 private float defensaBase;
 private Arma armaEquipada;
-private List inventario;
-private List habilidades;
+@ManyToMany
+@JoinTable(
+    name = "Peleador_id",
+    joinColumns = @JoinColumn(name = "Peleador_id"),
+    inverseJoinColumns = @JoinColumn(name = "Arma_id")
+)
+private List <Arma> Armaspeleador;
 
+private List Arma;
+@ManyToMany
+@JoinTable(
+    name = "Peleador_id",
+    joinColumns = @JoinColumn(name = "Peleador_id"),
+    inverseJoinColumns = @JoinColumn(name = "Ataque_id")
+)
+private List <Ataque> Ataquespeleador;
 
 
 
 public Peleador() {
 }
 
-public Peleador(long id, String nombre, int puntosVida, int energia, float defensaBase, Arma armaEquipada,
-        List inventario, List habilidades) {
+
+
+public Peleador(long id, String nombre, int puntosVida, int energia, float defensaBase, GOW.entidades.Arma armaEquipada,
+        List<GOW.entidades.Arma> armaspeleador, List arma, List<Ataque> ataquespeleador) {
     Id = id;
     this.nombre = nombre;
     PuntosVida = puntosVida;
     this.energia = energia;
     this.defensaBase = defensaBase;
     this.armaEquipada = armaEquipada;
-    this.inventario = inventario;
-    this.habilidades = habilidades;
+    Armaspeleador = armaspeleador;
+    Arma = arma;
+    Ataquespeleador = ataquespeleador;
 }
+
+
 
 public long getId() {
     return Id;
@@ -68,16 +86,41 @@ public Arma getArmaEquipada() {
 public void setArmaEquipada(Arma armaEquipada) {
     this.armaEquipada = armaEquipada;
 }
-public List getInventario() {
-    return inventario;
+
+
+
+public List<Arma> getArmaspeleador() {
+    return Armaspeleador;
 }
-public void setInventario(List inventario) {
-    this.inventario = inventario;
+
+
+
+public void setArmaspeleador(List<Arma> armaspeleador) {
+    Armaspeleador = armaspeleador;
 }
-public List getHabilidades() {
-    return habilidades;
+
+
+
+public List getArma() {
+    return Arma;
 }
-public void setHabilidades(List habilidades) {
-    this.habilidades = habilidades;
+
+
+
+public void setArma(List arma) {
+    Arma = arma;
 }
+
+
+
+public List<Ataque> getAtaquespeleador() {
+    return Ataquespeleador;
+}
+
+
+
+public void setAtaquespeleador(List<Ataque> ataquespeleador) {
+    Ataquespeleador = ataquespeleador;
+}
+
 }
