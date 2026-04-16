@@ -4,6 +4,7 @@ import java.util.List;
 
 @Entity
 public class Arma{
+    
 private int id;
 private String nombre;
 private int BonificadorDanio;
