@@ -1,5 +1,6 @@
 package GOW.entidades;
 import jakarta.persistence.*;
+import java.util.List;
 @Entity
 
 public class Ataque {
@@ -12,7 +13,8 @@ public class Ataque {
     private String email;
     private int costoEnergia;
     private int daniobase;
-
+    @ManyToMany(mappedBy = "ataquepeleadores") 
+    private List<Peleador> peleadores;
    
     public Ataque() {
     }
