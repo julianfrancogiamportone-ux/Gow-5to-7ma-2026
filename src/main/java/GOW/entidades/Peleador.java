@@ -12,7 +12,7 @@ private int energia;
 private float defensaBase;
 @ManyToMany
 @JoinTable(
-    name = "Peleador_id",
+    name = "Armaspeleador",
     joinColumns = @JoinColumn(name = "Peleador_id"),
     inverseJoinColumns = @JoinColumn(name = "Arma_id")
 )
@@ -20,7 +20,7 @@ private List <Arma> Armaspeleador;
 
 @ManyToMany
 @JoinTable(
-    name = "Peleador_id",
+    name = "Ataquespeleados",
     joinColumns = @JoinColumn(name = "Peleador_id"),
     inverseJoinColumns = @JoinColumn(name = "Ataque_id")
 )
