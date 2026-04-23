@@ -10,7 +10,6 @@ private String nombre;
 private int PuntosVida;
 private int energia;
 private float defensaBase;
-private Arma armaEquipada;
 @ManyToMany
 @JoinTable(
     name = "Peleador_id",
@@ -19,7 +18,6 @@ private Arma armaEquipada;
 )
 private List <Arma> Armaspeleador;
 
-private List Arma;
 @ManyToMany
 @JoinTable(
     name = "Peleador_id",
@@ -36,15 +34,13 @@ public Peleador() {
 
 
 public Peleador(long id, String nombre, int puntosVida, int energia, float defensaBase, GOW.entidades.Arma armaEquipada,
-        List<GOW.entidades.Arma> armaspeleador, List arma, List<Ataque> ataquespeleador) {
+        List<GOW.entidades.Arma> armaspeleador, List <Arma> armas, List<Ataque> ataquespeleador) {
     Id = id;
     this.nombre = nombre;
     PuntosVida = puntosVida;
     this.energia = energia;
     this.defensaBase = defensaBase;
-    this.armaEquipada = armaEquipada;
     Armaspeleador = armaspeleador;
-    Arma = arma;
     Ataquespeleador = ataquespeleador;
 }
 
@@ -80,13 +76,6 @@ public float getDefensaBase() {
 public void setDefensaBase(float defensaBase) {
     this.defensaBase = defensaBase;
 }
-public Arma getArmaEquipada() {
-    return armaEquipada;
-}
-public void setArmaEquipada(Arma armaEquipada) {
-    this.armaEquipada = armaEquipada;
-}
-
 
 
 public List<Arma> getArmaspeleador() {
@@ -97,18 +86,6 @@ public List<Arma> getArmaspeleador() {
 
 public void setArmaspeleador(List<Arma> armaspeleador) {
     Armaspeleador = armaspeleador;
-}
-
-
-
-public List getArma() {
-    return Arma;
-}
-
-
-
-public void setArma(List arma) {
-    Arma = arma;
 }
 
 

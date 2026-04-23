@@ -4,8 +4,10 @@ import java.util.List;
 
 @Entity
 public class Arma{
-    
-private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+        
 private String nombre;
 private int BonificadorDanio;
 private float peso;
@@ -15,16 +17,16 @@ private List<Peleador> peleadores;
 public Arma(){
  
 }
-public Arma(int id, String nombre, int bonificadorDanio, float peso) {
+public Arma(Long id, String nombre, int bonificadorDanio, float peso) {
     this.id = id;
     this.nombre = nombre;
     BonificadorDanio = bonificadorDanio;
     this.peso = peso;
 }
-public int getId() {
+public Long getId() {
     return id;
 }
-public void setId(int id) {
+public void setId(Long id) {
     this.id = id;
 }
 public String getNombre() {

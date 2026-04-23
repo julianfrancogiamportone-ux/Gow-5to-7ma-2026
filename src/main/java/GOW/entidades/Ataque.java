@@ -13,7 +13,7 @@ public class Ataque {
     private String email;
     private int costoEnergia;
     private int daniobase;
-    @ManyToMany(mappedBy = "ataquepeleadores") 
+    @ManyToMany(mappedBy = "Ataquespeleador") 
     private List<Peleador> peleadores;
    
     public Ataque() {
