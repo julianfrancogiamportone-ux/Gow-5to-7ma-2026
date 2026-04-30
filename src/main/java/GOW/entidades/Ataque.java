@@ -10,7 +10,6 @@ public class Ataque {
     private Long id;
 
     private String nombre;
-    private String email;
     private int costoEnergia;
     private int daniobase;
     @ManyToMany(mappedBy = "Ataquespeleador") 
@@ -19,10 +18,9 @@ public class Ataque {
     public Ataque() {
     }
 
-  public Ataque(Long id, String nombre, String email, int costoEnergia, int daniobase) {
+  public Ataque(Long id, String nombre, int costoEnergia, int daniobase) {
         this.id = id;
         this.nombre = nombre;
-        this.email = email;
         this.costoEnergia = costoEnergia;
         this.daniobase = daniobase;
     }
@@ -38,12 +36,6 @@ public class Ataque {
     }
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
     }
     public int getCostoEnergia() {
         return costoEnergia;
