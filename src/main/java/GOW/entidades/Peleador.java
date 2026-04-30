@@ -20,7 +20,7 @@ private List <Arma> Armaspeleador;
 
 @ManyToMany
 @JoinTable(
-    name = "Ataquespeleados",
+    name = "Ataquespeleador",
     joinColumns = @JoinColumn(name = "Peleador_id"),
     inverseJoinColumns = @JoinColumn(name = "Ataque_id")
 )
@@ -33,15 +33,12 @@ public Peleador() {
 
 
 
-public Peleador(long id, String nombre, int puntosVida, int energia, float defensaBase, GOW.entidades.Arma armaEquipada,
-        List<GOW.entidades.Arma> armaspeleador, List <Arma> armas, List<Ataque> ataquespeleador) {
+public Peleador(long id, String nombre, int puntosVida, int energia, float defensaBase) {
     Id = id;
     this.nombre = nombre;
-    PuntosVida = puntosVida;
+    this.PuntosVida = puntosVida;
     this.energia = energia;
     this.defensaBase = defensaBase;
-    Armaspeleador = armaspeleador;
-    Ataquespeleador = ataquespeleador;
 }
 
 
@@ -100,4 +97,8 @@ public void setAtaquespeleador(List<Ataque> ataquespeleador) {
     Ataquespeleador = ataquespeleador;
 }
 
+public void imprimir(){
+    System.out.println("El nombre del peleador es "+nombre);
+    System.out.println("Los puntos de vida son "+PuntosVida);
+}
 }
