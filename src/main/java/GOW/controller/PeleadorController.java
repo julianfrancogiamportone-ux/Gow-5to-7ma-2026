@@ -1,5 +1,5 @@
 package GOW.controller;
 
-public class controllerclass {
+public class PeleadorController {
 
 }
