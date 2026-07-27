@@ -9,11 +9,11 @@ import GOW.repository.ArmaRepository;
 @Service 
 public class ArmaService implements ArmaIService { 
  @Autowired 
-    private ArmaRepository pRepository; 
+    private ArmaRepository ArmaRepository; 
     public List<Arma> findAllCharacters() { 
-        return pRepository.findAll(); 
+        return ArmaRepository.findAll(); 
     } 
     public Arma saveCharacter(Arma arma) { 
-        return pRepository.save(arma); 
+        return ArmaRepository.save(arma); 
     } 
 } 

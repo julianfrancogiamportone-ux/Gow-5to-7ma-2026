@@ -1,5 +1,9 @@
 package GOW.repository;
 
-public interface repointerface {
+import org.springframework.data.jpa.repository.JpaRepository; 
+import GOW.entidades.Peleador;
 
+public interface PeleadorRepository extends JpaRepository<Peleador, Long>{
+
+    
 }

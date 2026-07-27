@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import GOW.IService.PeleadorIService;
 import GOW.entidades.Peleador;
 import GOW.repository.PeleadorRepository;
@@ -16,7 +15,7 @@ public class PeleadorService implements PeleadorIService {
     private PeleadorRepository pRepository;
 
     @Override
-    public List<Peleador> findAllCharacters() {
+    public List<Peleador>findAllCharacters() {
         return pRepository.findAll();
     }
 

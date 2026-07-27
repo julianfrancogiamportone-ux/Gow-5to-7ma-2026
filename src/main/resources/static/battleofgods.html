@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>God of War - Battle of Gods</title>
+
+    <link rel="stylesheet" href="css/battle2.css">
+</head>
+
+<body>
+
+    <header class="game-header">
+        <h1>⚔️ GOD OF WAR ⚔️</h1>
+        <p>LA BATALLA DE LOS DIOSES</p>
+    </header>
+
+    <main>
+
+        <section id="fight-container">
+
+            <div class="player player-one">
+
+                <div class="player-title">
+                    <span>JUGADOR 1</span>
+                    <h2>GUERRERO</h2>
+                </div>
+
+                <div class="fighter-card">
+
+                    <div class="fighter-name">
+                        <span id="fighter1Name">
+                            SELECCIONAR GUERRERO
+                        </span>
+                    </div>
+
+                    <img
+                        id="fighter1Image"
+                        src="placeholder1.png"
+                        alt="Personaje del Jugador 1"
+                        class="fighter-img"
+                    >
+
+                    <div class="character-selection">
+
+                        <label for="fighter1">
+                            ELEGÍ A TU GUERRERO
+                        </label>
+
+                        <select id="fighter1">
+
+                            <option value="">
+                                -- SELECCIONAR --
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="stats">
+
+                        <div class="stat">
+
+                            <span>❤️ VIDA</span>
+
+                            <div class="bar">
+                                <div
+                                    id="fighter1HealthBar"
+                                    class="health-bar"
+                                ></div>
+                            </div>
+
+                            <strong id="fighter1Health">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="stat">
+
+                            <span>⚡ ENERGÍA</span>
+
+                            <div class="bar">
+                                <div
+                                    id="fighter1EnergyBar"
+                                    class="energy-bar"
+                                ></div>
+                            </div>
+
+                            <strong id="fighter1Energy">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="stat">
+
+                            <span>🛡️ DEFENSA BASE</span>
+
+                            <div class="bar">
+                                <div
+                                    id="fighter1DefenseBar"
+                                    class="defense-bar"
+                                ></div>
+                            </div>
+
+                            <strong id="fighter1Defense">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="fighter-info">
+
+                        <p>
+                            ⚔️ <strong>ARMA:</strong>
+                            <span id="fighter1Weapon">-</span>
+                        </p>
+
+                        <p>
+                            💥 <strong>ATAQUE:</strong>
+                            <span id="fighter1Attack">-</span>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="versus">
+
+                <div class="lightning">
+                    ⚡
+                </div>
+
+                <span>VS</span>
+
+                <div class="lightning">
+                    ⚡
+                </div>
+
+            </div>
+
+
+            <div class="player player-two">
+
+                <div class="player-title">
+                    <span>JUGADOR 2</span>
+                    <h2>GUERRERO</h2>
+                </div>
+
+                <div class="fighter-card">
+
+                    <div class="fighter-name">
+                        <span id="fighter2Name">
+                            SELECCIONAR GUERRERO
+                        </span>
+                    </div>
+
+                    <img
+                        id="fighter2Image"
+                        src="placeholder2.png"
+                        alt="Personaje del Jugador 2"
+                        class="fighter-img"
+                    >
+
+                    <div class="character-selection">
+
+                        <label for="fighter2">
+                            ELEGÍ A TU GUERRERO
+                        </label>
+
+                        <select id="fighter2">
+
+                            <option value="">
+                                -- SELECCIONAR --
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="stats">
+
+                        <div class="stat">
+
+                            <span>❤️ VIDA</span>
+
+                            <div class="bar">
+                                <div
+                                    id="fighter2HealthBar"
+                                    class="health-bar"
+                                ></div>
+                            </div>
+
+                            <strong id="fighter2Health">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="stat">
+
+                            <span>⚡ ENERGÍA</span>
+
+                            <div class="bar">
+                                <div
+                                    id="fighter2EnergyBar"
+                                    class="energy-bar"
+                                ></div>
+                            </div>
+
+                            <strong id="fighter2Energy">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="stat">
+
+                            <span>🛡️ DEFENSA BASE</span>
+
+                            <div class="bar">
+                                <div
+                                    id="fighter2DefenseBar"
+                                    class="defense-bar"
+                                ></div>
+                            </div>
+
+                            <strong id="fighter2Defense">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="fighter-info">
+
+                        <p>
+                            ⚔️ <strong>ARMA:</strong>
+                            <span id="fighter2Weapon">-</span>
+                        </p>
+
+                        <p>
+                            💥 <strong>ATAQUE:</strong>
+                            <span id="fighter2Attack">-</span>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="battle-controls">
+
+            <button id="fightButton">
+                ⚔️ ¡COMENZAR BATALLA! ⚔️
+            </button>
+
+        </section>
+
+
+        <section id="result" class="hidden">
+
+            <h2 id="resultTitle">
+                ¡EL COMBATE HA COMENZADO!
+            </h2>
+
+            <p id="resultText"></p>
+
+            <button id="restartButton">
+                🔥 NUEVA BATALLA 🔥
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            ⚔️ SOLO UNO PODRÁ SOBREVIVIR ⚔️
+        </p>
+
+    </footer>
+
+
+    <script src="css/battle2.css"></script>
+
+</body>
+
+</html>

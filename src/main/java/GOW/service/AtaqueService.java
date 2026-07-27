@@ -11,12 +11,12 @@ import java.util.List;
         @Service 
 public class AtaqueService implements AtaqueIService { 
  @Autowired 
-    private AtaqueRepository pRepository; 
+    private AtaqueRepository AtaqueRepository; 
     public List<Ataque> findAllCharacters() { 
-        return pRepository.findAll(); 
+        return AtaqueRepository.findAll(); 
     } 
     public Ataque saveCharacter(Ataque Ataque) { 
-        return pRepository.save(Ataque); 
+        return AtaqueRepository.save(Ataque); 
     } 
 }
 
