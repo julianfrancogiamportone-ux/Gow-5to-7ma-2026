@@ -12,6 +12,7 @@ import java.util.List;
 public class AtaqueService implements AtaqueIService { 
  @Autowired 
     private AtaqueRepository AtaqueRepository; 
+    
     public List<Ataque> findAllCharacters() { 
         return AtaqueRepository.findAll(); 
     } 

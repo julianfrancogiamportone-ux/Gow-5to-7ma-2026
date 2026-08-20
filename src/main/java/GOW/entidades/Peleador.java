@@ -10,6 +10,7 @@ private String nombre;
 private int PuntosVida;
 private int energia;
 private float defensaBase;
+private String UrlImagen;
 @ManyToMany
 @JoinTable(
     name = "Armaspeleador",
