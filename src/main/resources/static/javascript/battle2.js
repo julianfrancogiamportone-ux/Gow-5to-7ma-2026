@@ -1,122 +1,204 @@
-const API_URL = 'http://localhost:8080/api/characters'; 
+// URLs de las APIs en Java
+const API_PELEADORES = '/api/characters';
+const API_ARMAS = '/api/armas';
 
-const fighter1Select = document.getElementById('fighter1'); 
-const fighter2Select = document.getElementById('fighter2'); 
-const fightButton = document.getElementById('fightButton'); 
-const resultDiv = document.getElementById('result'); 
-const resultTitle = document.getElementById('resultTitle');
+// Elementos del HTML (Jugador 1)
+const fighter1Select = document.getElementById('fighter1');
+const fighter1Image = document.getElementById('fighter1Image');
+const fighter1Name = document.getElementById('fighter1Name');
+const fighter1Health = document.getElementById('fighter1Health');
+const fighter1HealthBar = document.getElementById('fighter1HealthBar');
+const fighter1Energy = document.getElementById('fighter1Energy');
+const fighter1EnergyBar = document.getElementById('fighter1EnergyBar');
+const fighter1Defense = document.getElementById('fighter1Defense');
+const fighter1DefenseBar = document.getElementById('fighter1DefenseBar');
+const fighter1Weapon = document.getElementById('fighter1Weapon');
+const fighter1Attack = document.getElementById('fighter1Attack');
+
+// Elementos del HTML (Jugador 2)
+const fighter2Select = document.getElementById('fighter2');
+const fighter2Image = document.getElementById('fighter2Image');
+const fighter2Name = document.getElementById('fighter2Name');
+const fighter2Health = document.getElementById('fighter2Health');
+const fighter2HealthBar = document.getElementById('fighter2HealthBar');
+const fighter2Energy = document.getElementById('fighter2Energy');
+const fighter2EnergyBar = document.getElementById('fighter2EnergyBar');
+const fighter2Defense = document.getElementById('fighter2Defense');
+const fighter2DefenseBar = document.getElementById('fighter2DefenseBar');
+const fighter2Weapon = document.getElementById('fighter2Weapon');
+const fighter2Attack = document.getElementById('fighter2Attack');
+
+const fightButton = document.getElementById('fightButton');
+const resultDiv = document.getElementById('result');
 const resultText = document.getElementById('resultText');
-const restartButton = document.getElementById('restartButton');
 
-let peleadores = []; 
+let characters = [];
+let armasList = [];
 
-async function fetchData() {     
-    try { 
-        const response = await fetch(API_URL); 
-        peleadores = await response.json(); 
-        loadFighters(); 
-    } catch (error) { 
-        console.error('Error al cargar los personajes:', error); 
-    } 
-} 
+// Cargar datos al iniciar
+async function initGame() {
+  try {
+    const [resPeleadores, resArmas] = await Promise.all([
+      fetch(API_PELEADORES),
+      fetch(API_ARMAS)
+    ]);
 
-function loadFighters() { 
-    fighter1Select.innerHTML = '<option value="">-- SELECCIONAR --</option>';
-    fighter2Select.innerHTML = '<option value="">-- SELECCIONAR --</option>';
+    characters = await resPeleadores.json();
+    armasList = await resArmas.json();
 
-    peleadores.forEach((fighter, index) => { 
-        const option1 = document.createElement('option'); 
-        option1.value = index; 
-        option1.textContent = fighter.nombre; 
-        fighter1Select.appendChild(option1); 
+    loadFighters();
+  } catch (error) {
+    console.error('Error al conectar con el servidor Java:', error);
+  }
+}
 
-        const option2 = document.createElement('option'); 
-        option2.value = index; 
-        option2.textContent = fighter.nombre; 
-        fighter2Select.appendChild(option2); 
-    }); 
-} 
+// Separar Dioses (Jugador 1) y Artistas (Jugador 2)
+function loadFighters() {
+  fighter1Select.innerHTML = '<option value="">-- SELECCIONAR DIOS --</option>';
+  fighter2Select.innerHTML = '<option value="">-- SELECCIONAR ARTISTA --</option>';
 
-fighter1Select.addEventListener('change', (e) => { 
-    const peleador = peleadores[e.target.value]; 
-    if (peleador) actualizarInterfaz(1, peleador); 
-}); 
+  if (characters.length === 0) return;
 
-fighter2Select.addEventListener('change', (e) => { 
-    const peleador = peleadores[e.target.value]; 
-    if (peleador) actualizarInterfaz(2, peleador); 
-}); 
+  const mitad = Math.floor(characters.length / 2);
+  const dioses = characters.slice(0, mitad);     
+  const artistas = characters.slice(mitad);   
 
-function actualizarInterfaz(num, p) { 
-    document.getElementById(`fighter${num}Name`).textContent = p.nombre || '-'; 
+  dioses.forEach(fighter => {
+    const option = document.createElement('option');
+    option.value = JSON.stringify(fighter);
+    option.text = fighter.nombre;
+    fighter1Select.appendChild(option);
+  });
 
-    const imgElement = document.getElementById(`fighter${num}Image`);
-    const rutaImagen = p.UrlImagen || p.urlImagen;
+  artistas.forEach(fighter => {
+    const option = document.createElement('option');
+    option.value = JSON.stringify(fighter);
+    option.text = fighter.nombre;
+    fighter2Select.appendChild(option);
+  });
+}
 
-    imgElement.src = rutaImagen ? rutaImagen : '/imagenes/kratos.jpg';
-    imgElement.onerror = function() { this.src = '/imagenes/kratos.jpg'; };
+const ARMAS_ARTISTAS = ['Micrófono de Oro', 'Consola de DJ', 'Guitarra Eléctrica', 'Autotune Pro', 'Teclado MIDI', 'Batería Acústica'];
+const ATAQUES_ARTISTAS = ['Flow Master', 'Hit Mundial', 'Verso Letal', 'Drop Explosivo', 'Estribillo Épico', 'Solo de Guitarra'];
 
-    // Lectura priorizando PuntosVida, Energia y DefensaBase en mayúsculas
-    const vida = p.PuntosVida ?? p.puntosVida ?? 0;
-    const energia = p.Energia ?? p.energia ?? 0;
-    const defensa = p.DefensaBase ?? p.defensaBase ?? 0;
+function obtenerTextoDinamico(arrayOObjeto, listaFallback, idUnico) {
+  if (arrayOObjeto) {
+    if (Array.isArray(arrayOObjeto) && arrayOObjeto.length > 0) {
+      const item = arrayOObjeto[0];
+      if (typeof item === 'string') return item;
+      const texto = item.nombre || item.Nombre || item.descripcion || item.titulo;
+      if (texto) return texto;
+    } else if (typeof arrayOObjeto === 'object') {
+      const texto = arrayOObjeto.nombre || arrayOObjeto.Nombre || arrayOObjeto.descripcion;
+      if (texto) return texto;
+    } else if (typeof arrayOObjeto === 'string' && arrayOObjeto.trim() !== '') {
+      return arrayOObjeto;
+    }
+  }
+  const index = (idUnico || 0) % listaFallback.length;
+  return listaFallback[index];
+}
 
-    document.getElementById(`fighter${num}Health`).textContent = vida; 
-    document.getElementById(`fighter${num}Energy`).textContent = energia; 
-    document.getElementById(`fighter${num}Defense`).textContent = defensa; 
+// Actualizar panel Jugador 1 (DIOSES)
+fighter1Select.addEventListener('change', () => {
+  if (!fighter1Select.value) return;
+  const f = JSON.parse(fighter1Select.value);
 
-    const armas = p.Armaspeleador || p.armaspeleador;
-    const ataques = p.Ataquespeleador || p.ataquespeleador;
+  fighter1Name.textContent = f.nombre;
+  
+  let imgUrl = f.UrlImagen || f.urlImagen || f.imagen || f.img || f.foto;
+  fighter1Image.src = (imgUrl && imgUrl !== "null") ? imgUrl : 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f464.png';
 
-    const arma = (armas && armas.length > 0) ? armas[0].nombre : 'Sin Arma'; 
-    const ataque = (ataques && ataques.length > 0) ? ataques[0].nombre : 'Ataque Básico'; 
+  const vida = f.puntosVida || f.vida || f.PuntosVida || f.puntos_vida || 100;
+  const energia = f.energia || f.Energia || 50;
+  const defensa = f.defensa || f.defensaBase || f.Defensa || 20;
 
-    document.getElementById(`fighter${num}Weapon`).textContent = arma; 
-    document.getElementById(`fighter${num}Attack`).textContent = ataque; 
+  fighter1Health.textContent = vida;
+  fighter1HealthBar.style.width = Math.min((vida / 10000) * 100, 100) + '%'; 
 
-    document.getElementById(`fighter${num}HealthBar`).style.width = `${Math.min((vida / 2000) * 100, 100)}%`; 
-    document.getElementById(`fighter${num}EnergyBar`).style.width = `${Math.min((energia / 1000) * 100, 100)}%`; 
-    document.getElementById(`fighter${num}DefenseBar`).style.width = `${Math.min(defensa, 100)}%`; 
-} 
+  fighter1Energy.textContent = energia;
+  fighter1EnergyBar.style.width = Math.min(energia, 100) + '%';
 
-fightButton.addEventListener('click', () => { 
-    const f1 = peleadores[fighter1Select.value]; 
-    const f2 = peleadores[fighter2Select.value]; 
+  fighter1Defense.textContent = defensa;
+  fighter1DefenseBar.style.width = Math.min(defensa, 100) + '%';
 
-    if (!f1 || !f2) { 
-        alert('¡Seleccioná ambos luchadores!'); 
-        return; 
-    } 
+  const armasDioses = ['Espada Divina', 'Lanza Gungnir', 'Martillo Mjölnir', 'Tridente Sagrado'];
+  const ataquesDioses = ['Ira del Olimpo', 'Juicio Final', 'Fulgor Divino', 'Castigo Celestial'];
 
-    const p1Vida = f1.PuntosVida ?? f1.puntosVida ?? 0;
-    const p1Energia = f1.Energia ?? f1.energia ?? 0;
-    const p1Defensa = f1.DefensaBase ?? f1.defensaBase ?? 0;
+  fighter1Weapon.textContent = obtenerTextoDinamico(f.Armaspeleador || f.armas, armasDioses, f.id);
+  fighter1Attack.textContent = obtenerTextoDinamico(f.Ataquespeleador || f.ataques, ataquesDioses, f.id);
+});
 
-    const p2Vida = f2.PuntosVida ?? f2.puntosVida ?? 0;
-    const p2Energia = f2.Energia ?? f2.energia ?? 0;
-    const p2Defensa = f2.DefensaBase ?? f2.defensaBase ?? 0;
+// MAPEO ESTRICTO APUNTANDO A LA CARPETA "imagenes"
+const mapaImagenesArtistas = {
+  "Ariana Grande": "ariana-grande.webp",
+  "Bad Bunny": "bad-bunny.webp",
+  "Billie Eilish": "billie-eilish.webp",
+  "Bizarrap": "bizarrap.webp",
+  "Cazzu": "cazzu.jpg",
+  "Drake": "drake.webp",
+  "Duki": "duki.png",
+  "Emilia": "emilia.jpg",
+  "Feid": "feid.webp",
+  "Taylor Swift": "taylor-swift.webp"
+};
 
-    const power1 = p1Vida + p1Energia + p1Defensa; 
-    const power2 = p2Vida + p2Energia + p2Defensa; 
+// Actualizar panel Jugador 2 (ARTISTAS)
+fighter2Select.addEventListener('change', () => {
+  if (!fighter2Select.value) return;
+  const f = JSON.parse(fighter2Select.value);
 
-    resultDiv.classList.remove('hidden'); 
+  fighter2Name.textContent = f.nombre;
 
-    if (power1 > power2) { 
-        resultTitle.textContent = `🏆 ¡${f1.nombre} ES EL GANADOR! 🏆`; 
-        resultText.textContent = `Poder total: ${power1} pts vs ${power2} pts.`; 
-    } else if (power2 > power1) { 
-        resultTitle.textContent = `🏆 ¡${f2.nombre} ES EL GANADOR! 🏆`; 
-        resultText.textContent = `Poder total: ${power2} pts vs ${power1} pts.`; 
-    } else { 
-        resultTitle.textContent = '⚔️ ¡EMPATE! ⚔️'; 
-        resultText.textContent = 'Ambos guerreros poseen la misma fuerza.'; 
-    } 
-}); 
+  let rutaImagen = 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f464.png';
+  
+  if (f.UrlImagen && f.UrlImagen !== "null" && String(f.UrlImagen).trim() !== "") {
+      rutaImagen = f.UrlImagen; 
+  } else if (mapaImagenesArtistas[f.nombre]) {
+      // AQUÍ ESTÁ EL CAMBIO CLAVE: apunta a /imagenes/ (con "enes")
+      rutaImagen = `/imagenes/${mapaImagenesArtistas[f.nombre]}`;
+  } else {
+      const nombreFormateado = f.nombre ? f.nombre.toLowerCase().trim().replace(/\s+/g, '-') : 'default';
+      rutaImagen = `/imagenes/${nombreFormateado}.webp`;
+  }
 
-if (restartButton) { 
-    restartButton.addEventListener('click', () => { 
-        resultDiv.classList.add('hidden'); 
-    }); 
-} 
+  fighter2Image.src = rutaImagen;
 
-fetchData();
+  const vida = f.puntosVida || f.vida || f.PuntosVida || f.puntos_vida || 100;
+  const energia = f.energia || f.Energia || 50;
+  const defensa = f.defensa || f.defensaBase || f.Defensa || 20;
+
+  fighter2Health.textContent = vida;
+  fighter2HealthBar.style.width = Math.min((vida / 10000) * 100, 100) + '%'; 
+
+  fighter2Energy.textContent = energia;
+  fighter2EnergyBar.style.width = Math.min(energia, 100) + '%';
+
+  fighter2Defense.textContent = defensa;
+  fighter2DefenseBar.style.width = Math.min(defensa, 100) + '%';
+
+  fighter2Weapon.textContent = obtenerTextoDinamico(f.Armaspeleador || f.armas, ARMAS_ARTISTAS, f.id);
+  fighter2Attack.textContent = obtenerTextoDinamico(f.Ataquespeleador || f.ataques, ATAQUES_ARTISTAS, f.id);
+});
+
+// Lógica de Batalla
+fightButton.addEventListener('click', () => {
+  if (!fighter1Select.value || !fighter2Select.value) {
+    alert('Seleccioná un luchador para cada bando.');
+    return;
+  }
+
+  const f1 = JSON.parse(fighter1Select.value);
+  const f2 = JSON.parse(fighter2Select.value);
+
+  const power1 = (f1.puntosVida || f1.vida || f1.PuntosVida || 100) + (f1.energia || 50);
+  const power2 = (f2.puntosVida || f2.vida || f2.PuntosVida || 100) + (f2.energia || 50);
+
+  let winner = power1 >= power2 ? f1.nombre : f2.nombre;
+  if (power1 === power2) winner = "¡Empate técnico!";
+
+  resultText.textContent = `🏆 ¡El ganador es ${winner}! 🥊`;
+  resultDiv.classList.remove('hidden');
+});
+
+initGame();
